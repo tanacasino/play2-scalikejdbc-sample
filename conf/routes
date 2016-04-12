@@ -1,0 +1,3 @@
+
+GET           /api/v1/index                                         @controllers.IndexController.index()
+
