@@ -33,17 +33,16 @@ val appDependencies = Seq(
   "jp.t2v"                        %% "play2-auth"                          % "0.14.2",
   "com.github.mumoshu"            %% "play2-memcached-play24"              % "0.7.0",
 
+  // scalikejdbc
+  "org.scalikejdbc"               %% "scalikejdbc"                         % "2.3.5",
+  "org.scalikejdbc"               %% "scalikejdbc-config"                  % "2.3.5",
+  "org.scalikejdbc"               %% "scalikejdbc-play-initializer"        % "2.5.0",
 
   // Others
   "mysql"                          % "mysql-connector-java"                % "5.1.36",
   "com.h2database"                 % "h2"                                  % "1.4.191",
   "org.mindrot"                    % "jbcrypt"                             % "0.3m",
   "org.scalaz"                    %% "scalaz-core"                         % "7.1.7",
-
-  // scalikejdbc
-  "org.scalikejdbc"               %% "scalikejdbc"                         % "2.3.5",
-  "org.scalikejdbc"               %% "scalikejdbc-config"                  % "2.3.5",
-  "org.scalikejdbc"               %% "scalikejdbc-play-initializer"        % "2.5.0",
 
   // Test
   "org.scalatest"                 %% "scalatest"                           % "2.2.6"                 % "test",
