@@ -32,10 +32,11 @@ val appDependencies = Seq(
   // Play Thirdparty libs
   "jp.t2v"                        %% "play2-auth"                          % "0.14.2",
   "com.github.mumoshu"            %% "play2-memcached-play24"              % "0.7.0",
+  "org.flywaydb"                  %% "flyway-play"                         % "3.0.1",
 
   // scalikejdbc
-  "org.scalikejdbc"               %% "scalikejdbc"                         % "2.4.+",
-  "org.scalikejdbc"               %% "scalikejdbc-config"                  % "2.4.+",
+  "org.scalikejdbc"               %% "scalikejdbc"                         % "2.4.2",
+  "org.scalikejdbc"               %% "scalikejdbc-config"                  % "2.4.2",
   "org.scalikejdbc"               %% "scalikejdbc-play-initializer"        % "2.5.1",
 
   // Others
@@ -65,6 +66,7 @@ excludeFilter in scalariformFormat := new SimpleFileFilter(target => {
 scalariformPreferences := scalariformPreferences.value
   .setPreference(DoubleIndentClassDeclaration, false)
 
+scalikejdbcSettings
 
 import play.sbt.PlayImport.PlayKeys._
 
