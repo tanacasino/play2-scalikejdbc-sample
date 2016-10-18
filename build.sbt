@@ -34,19 +34,18 @@ val appDependencies = Seq(
   "com.github.mumoshu"            %% "play2-memcached-play24"              % "0.7.0",
 
   // scalikejdbc
-  "org.scalikejdbc"               %% "scalikejdbc"                         % "2.3.5",
-  "org.scalikejdbc"               %% "scalikejdbc-config"                  % "2.3.5",
-  "org.scalikejdbc"               %% "scalikejdbc-play-initializer"        % "2.5.0",
+  "org.scalikejdbc"               %% "scalikejdbc"                         % "2.4.+",
+  "org.scalikejdbc"               %% "scalikejdbc-config"                  % "2.4.+",
+  "org.scalikejdbc"               %% "scalikejdbc-play-initializer"        % "2.5.1",
 
   // Others
-  "mysql"                          % "mysql-connector-java"                % "5.1.36",
-  "com.h2database"                 % "h2"                                  % "1.4.191",
+  "mysql"                          % "mysql-connector-java"                % "5.1.40",
+  "com.h2database"                 % "h2"                                  % "1.4.+",
   "org.mindrot"                    % "jbcrypt"                             % "0.3m",
   "org.scalaz"                    %% "scalaz-core"                         % "7.1.7",
 
   // Test
-  "org.scalatest"                 %% "scalatest"                           % "2.2.6"                 % "test",
-  "org.scalatestplus"             %% "play"                                % "1.4.0-M3"              % "test",
+  "org.scalatestplus.play"        %% "scalatestplus-play"                  % "1.5.1"                 % "test",
   "jp.t2v"                        %% "play2-auth-test"                     % "0.14.2"                % "test"
 )
 
@@ -56,32 +55,15 @@ import scalariform.formatter.preferences._
 
 scalariformSettings
 
-
-// Slick/Playのgenerate したscalaファイルを除外する
+// Playの generate したscalaファイルを除外する
 excludeFilter in scalariformFormat := new SimpleFileFilter(target => {
   val baseDirectory = file(".").getCanonicalPath
   lazy val relativePath = target.getCanonicalPath.stripPrefix(baseDirectory)
-  target.getName == "Tables.scala" ||
-    relativePath.startsWith("/target/scala-2.11/routes")
+  relativePath.startsWith("/target/scala-2.11/routes")
 })
 
 scalariformPreferences := scalariformPreferences.value
-  .setPreference(PlaceScaladocAsterisksBeneathSecondAsterisk, true)
-
-
-// prompt
-import com.scalapenos.sbt.prompt._
-import SbtPrompt.autoImport._
-
-val customPromptTheme = PromptTheme(
-  List(
-    text("[", fg(white)),
-    currentProject(fg(cyan)),
-    text("] ", fg(white)),
-    gitBranch(clean = fg(green), dirty = fg(red)),
-    text(" $ ", fg(yellow))
-  )
-)
+  .setPreference(DoubleIndentClassDeclaration, false)
 
 
 import play.sbt.PlayImport.PlayKeys._
@@ -97,9 +79,6 @@ lazy val root = Project(
   playDefaultPort := 9000
 ).settings(
   libraryDependencies ++= appDependencies
-).settings(
-  promptTheme := customPromptTheme,
-  shellPrompt := (implicit state => promptTheme.value.render(state))
 ).settings(
   maintainer in Docker := "Tomofumi Tanaka <tanacasino@gmail.com>",
   dockerExposedPorts in Docker := Seq(9000)
