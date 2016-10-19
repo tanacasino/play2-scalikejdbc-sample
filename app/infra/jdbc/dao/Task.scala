@@ -1,7 +1,7 @@
 package infra.jdbc.dao
 
 import scalikejdbc._
-import java.time.{ZonedDateTime}
+import java.time.{ ZonedDateTime }
 import scalikejdbc.jsr310._
 
 case class Task(
@@ -10,14 +10,14 @@ case class Task(
   content: Option[String] = None,
   userId: Long,
   createdAt: ZonedDateTime,
-  updatedAt: ZonedDateTime) {
+  updatedAt: ZonedDateTime
+) {
 
   def save()(implicit session: DBSession = Task.autoSession): Task = Task.save(this)(session)
 
   def destroy()(implicit session: DBSession = Task.autoSession): Unit = Task.destroy(this)(session)
 
 }
-
 
 object Task extends SQLSyntaxSupport[Task] {
 
@@ -77,7 +77,8 @@ object Task extends SQLSyntaxSupport[Task] {
     content: Option[String] = None,
     userId: Long,
     createdAt: ZonedDateTime,
-    updatedAt: ZonedDateTime)(implicit session: DBSession = autoSession): Task = {
+    updatedAt: ZonedDateTime
+  )(implicit session: DBSession = autoSession): Task = {
     withSQL {
       insert.into(Task).namedValues(
         column.taskId -> taskId,
@@ -95,7 +96,8 @@ object Task extends SQLSyntaxSupport[Task] {
       content = content,
       userId = userId,
       createdAt = createdAt,
-      updatedAt = updatedAt)
+      updatedAt = updatedAt
+    )
   }
 
   def batchInsert(entities: Seq[Task])(implicit session: DBSession = autoSession): Seq[Int] = {
@@ -106,8 +108,9 @@ object Task extends SQLSyntaxSupport[Task] {
         'content -> entity.content,
         'userId -> entity.userId,
         'createdAt -> entity.createdAt,
-        'updatedAt -> entity.updatedAt))
-        SQL("""insert into Task(
+        'updatedAt -> entity.updatedAt
+      ))
+    SQL("""insert into Task(
         task_id,
         title,
         content,
@@ -122,7 +125,7 @@ object Task extends SQLSyntaxSupport[Task] {
         {createdAt},
         {updatedAt}
       )""").batchByName(params: _*).apply()
-    }
+  }
 
   def save(entity: Task)(implicit session: DBSession = autoSession): Task = {
     withSQL {

@@ -1,7 +1,7 @@
 package infra.jdbc.dao
 
 import scalikejdbc._
-import java.time.{LocalDate, ZonedDateTime}
+import java.time.{ LocalDate, ZonedDateTime }
 import scalikejdbc.jsr310._
 
 case class User(
@@ -10,14 +10,14 @@ case class User(
   password: String,
   birthday: LocalDate,
   registeredAt: ZonedDateTime,
-  updatedAt: ZonedDateTime) {
+  updatedAt: ZonedDateTime
+) {
 
   def save()(implicit session: DBSession = User.autoSession): User = User.save(this)(session)
 
   def destroy()(implicit session: DBSession = User.autoSession): Unit = User.destroy(this)(session)
 
 }
-
 
 object User extends SQLSyntaxSupport[User] {
 
@@ -77,7 +77,8 @@ object User extends SQLSyntaxSupport[User] {
     password: String,
     birthday: LocalDate,
     registeredAt: ZonedDateTime,
-    updatedAt: ZonedDateTime)(implicit session: DBSession = autoSession): User = {
+    updatedAt: ZonedDateTime
+  )(implicit session: DBSession = autoSession): User = {
     withSQL {
       insert.into(User).namedValues(
         column.userId -> userId,
@@ -95,7 +96,8 @@ object User extends SQLSyntaxSupport[User] {
       password = password,
       birthday = birthday,
       registeredAt = registeredAt,
-      updatedAt = updatedAt)
+      updatedAt = updatedAt
+    )
   }
 
   def batchInsert(entities: Seq[User])(implicit session: DBSession = autoSession): Seq[Int] = {
@@ -106,8 +108,9 @@ object User extends SQLSyntaxSupport[User] {
         'password -> entity.password,
         'birthday -> entity.birthday,
         'registeredAt -> entity.registeredAt,
-        'updatedAt -> entity.updatedAt))
-        SQL("""insert into User(
+        'updatedAt -> entity.updatedAt
+      ))
+    SQL("""insert into User(
         user_id,
         name,
         password,
@@ -122,7 +125,7 @@ object User extends SQLSyntaxSupport[User] {
         {registeredAt},
         {updatedAt}
       )""").batchByName(params: _*).apply()
-    }
+  }
 
   def save(entity: User)(implicit session: DBSession = autoSession): User = {
     withSQL {

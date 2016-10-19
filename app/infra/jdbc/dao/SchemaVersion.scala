@@ -1,7 +1,7 @@
 package infra.jdbc.dao
 
 import scalikejdbc._
-import java.time.{ZonedDateTime}
+import java.time.{ ZonedDateTime }
 import scalikejdbc.jsr310._
 
 case class SchemaVersion(
@@ -14,14 +14,14 @@ case class SchemaVersion(
   installedBy: String,
   installedOn: ZonedDateTime,
   executionTime: Int,
-  success: Boolean) {
+  success: Boolean
+) {
 
   def save()(implicit session: DBSession = SchemaVersion.autoSession): SchemaVersion = SchemaVersion.save(this)(session)
 
   def destroy()(implicit session: DBSession = SchemaVersion.autoSession): Unit = SchemaVersion.destroy(this)(session)
 
 }
-
 
 object SchemaVersion extends SQLSyntaxSupport[SchemaVersion] {
 
@@ -89,7 +89,8 @@ object SchemaVersion extends SQLSyntaxSupport[SchemaVersion] {
     installedBy: String,
     installedOn: ZonedDateTime,
     executionTime: Int,
-    success: Boolean)(implicit session: DBSession = autoSession): SchemaVersion = {
+    success: Boolean
+  )(implicit session: DBSession = autoSession): SchemaVersion = {
     withSQL {
       insert.into(SchemaVersion).namedValues(
         column.installedRank -> installedRank,
@@ -115,7 +116,8 @@ object SchemaVersion extends SQLSyntaxSupport[SchemaVersion] {
       installedBy = installedBy,
       installedOn = installedOn,
       executionTime = executionTime,
-      success = success)
+      success = success
+    )
   }
 
   def batchInsert(entities: Seq[SchemaVersion])(implicit session: DBSession = autoSession): Seq[Int] = {
@@ -130,8 +132,9 @@ object SchemaVersion extends SQLSyntaxSupport[SchemaVersion] {
         'installedBy -> entity.installedBy,
         'installedOn -> entity.installedOn,
         'executionTime -> entity.executionTime,
-        'success -> entity.success))
-        SQL("""insert into schema_version(
+        'success -> entity.success
+      ))
+    SQL("""insert into schema_version(
         installed_rank,
         version,
         description,
@@ -154,7 +157,7 @@ object SchemaVersion extends SQLSyntaxSupport[SchemaVersion] {
         {executionTime},
         {success}
       )""").batchByName(params: _*).apply()
-    }
+  }
 
   def save(entity: SchemaVersion)(implicit session: DBSession = autoSession): SchemaVersion = {
     withSQL {

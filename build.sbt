@@ -37,11 +37,12 @@ val appDependencies = Seq(
   // scalikejdbc
   "org.scalikejdbc"               %% "scalikejdbc"                         % "2.4.2",
   "org.scalikejdbc"               %% "scalikejdbc-config"                  % "2.4.2",
+  "org.scalikejdbc"               %% "scalikejdbc-jsr310"                  % "2.4.2",
   "org.scalikejdbc"               %% "scalikejdbc-play-initializer"        % "2.5.1",
 
   // Others
   "mysql"                          % "mysql-connector-java"                % "5.1.40",
-  "com.h2database"                 % "h2"                                  % "1.4.+",
+  "com.h2database"                 % "h2"                                  % "1.4.192",
   "org.mindrot"                    % "jbcrypt"                             % "0.3m",
   "org.scalaz"                    %% "scalaz-core"                         % "7.1.7",
 
